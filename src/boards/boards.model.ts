@@ -4,7 +4,7 @@ export enum BoardStatus {
 }
 
 export interface Board {
-  id: number;
+  id: string;
   title: string;
   description: string;
   status: BoardStatus;

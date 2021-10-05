@@ -1,3 +1,4 @@
+import { UpdateBoardDto } from './dto/update-board.dto';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { Injectable } from '@nestjs/common';
 import { Board, BoardStatus } from './boards.model';
@@ -23,11 +24,21 @@ export class BoardsService {
     return board;
   }
 
-  getBoardById(id: string): Board {
+  getBoard(id: string): Board {
     return this.boards.find((board) => board.id === id);
   }
 
-  destroyBoardById(id: string): void {
+  destroyBoard(id: string): void {
     this.boards = this.boards.filter((board) => board.id != id);
+  }
+
+  updateBoard(id: string, updateBoardDto: UpdateBoardDto): Board {
+    const board = {
+      ...this.getBoard(id),
+      ...updateBoardDto,
+    };
+    this.destroyBoard(id);
+    this.boards.push(board);
+    return board;
   }
 }

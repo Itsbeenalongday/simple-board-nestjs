@@ -1,5 +1,3 @@
-import { UpdateBoardDto } from './dto/update-board.dto';
-import { CreateBoardDto } from './dto/create-board.dto';
 import {
   Body,
   Controller,
@@ -8,10 +6,13 @@ import {
   Param,
   Patch,
   Post,
-  Put,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { Board } from './boards.model';
 import { BoardsService } from './boards.service';
+import { CreateBoardDto } from './dto/create-board.dto';
+import { UpdateBoardDto } from './dto/update-board.dto';
 
 @Controller('boards')
 export class BoardsController {
@@ -23,6 +24,7 @@ export class BoardsController {
   }
 
   @Post()
+  @UsePipes(ValidationPipe)
   create(@Body() createBoardDto: CreateBoardDto): Board {
     return this.boardsService.createBoard(createBoardDto);
   }

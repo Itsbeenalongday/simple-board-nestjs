@@ -5,21 +5,25 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { Board } from './boards.model';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
+import { Board } from './board.entity';
 
 @Controller('boards')
 export class BoardsController {
   constructor(private boardsService: BoardsService) {}
-  
-  
+
+  @Get('/:id')
+  show(@Param('id', ParseIntPipe) id: number): Promise<Board> {
+    return this.boardsService.getBoard(id);
+  }
 }
 
 // @Get()
@@ -31,11 +35,6 @@ export class BoardsController {
 // @UsePipes(ValidationPipe)
 // create(@Body() createBoardDto: CreateBoardDto): Board {
 //   return this.boardsService.createBoard(createBoardDto);
-// }
-
-// @Get('/:id')
-// show(@Param('id') id: string): Board {
-//   return this.boardsService.getBoard(id);
 // }
 
 // @Delete('/:id')

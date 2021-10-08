@@ -1,8 +1,5 @@
-import { EntityRepository, Repository } from "typeorm";
-import { Board } from "./board.entity";
+import { EntityRepository, Repository } from 'typeorm';
+import { Board } from './board.entity';
 
-
-@EntityRepository(Board)
-export class BoardRepository extends Repository<Board> {
-  
-}
+@EntityRepository(Board) // board를 컨트롤 하겠다.
+export class BoardRepository extends Repository<Board> {}

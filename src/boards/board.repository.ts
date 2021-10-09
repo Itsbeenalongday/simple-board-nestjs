@@ -1,8 +1,14 @@
 import { NotFoundException } from '@nestjs/common';
-import { DeleteResult, EntityRepository, Repository } from 'typeorm';
+import {
+  DeleteResult,
+  EntityRepository,
+  Repository,
+  UpdateResult,
+} from 'typeorm';
 import { Board } from './board.entity';
 import { BoardStatus } from './boards.model';
 import { CreateBoardDto } from './dto/create-board.dto';
+import { UpdateBoardDto } from './dto/update-board.dto';
 
 @EntityRepository(Board) // board를 컨트롤 하겠다.
 export class BoardRepository extends Repository<Board> {
@@ -24,6 +30,14 @@ export class BoardRepository extends Repository<Board> {
   async deleteBoard(id: number): Promise<DeleteResult> {
     const board = await this.delete(id);
     if (board.affected === 0) throw new NotFoundException();
+    return board;
+  }
+
+  async patchBoard(
+    id: number,
+    updateBoardDto: UpdateBoardDto,
+  ): Promise<UpdateResult> {
+    const board = this.update(id, updateBoardDto);
     return board;
   }
 }

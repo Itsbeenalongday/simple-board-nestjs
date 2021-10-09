@@ -12,6 +12,10 @@ import { UpdateBoardDto } from './dto/update-board.dto';
 
 @EntityRepository(Board) // board를 컨트롤 하겠다.
 export class BoardRepository extends Repository<Board> {
+  async getBoards(): Promise<Board[]> {
+    return this.find();
+  }
+
   async postBoard(createBoardDto: CreateBoardDto): Promise<Board> {
     const board = this.create({
       status: BoardStatus.PUBLIC,

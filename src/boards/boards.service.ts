@@ -12,6 +12,10 @@ export class BoardsService {
     @InjectRepository(BoardRepository) private boardRepository: BoardRepository,
   ) {}
 
+  getBoards(): Promise<Board[]> {
+    return this.boardRepository.getBoards();
+  }
+
   postBoard(createBoardDto: CreateBoardDto): Promise<Board> {
     return this.boardRepository.postBoard(createBoardDto);
   }

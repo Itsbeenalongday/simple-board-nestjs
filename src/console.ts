@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import * as repl from 'repl';
@@ -20,7 +21,7 @@ class InteractiveNestJS {
     // start node repl
     const server = repl.start({
       useColors: true,
-      prompt: '> ',
+      prompt: '(Nest JS) > ',
       writer: replWriter,
       ignoreUndefined: true,
     });
@@ -29,7 +30,7 @@ class InteractiveNestJS {
   }
 }
 
-function replWriter(value: object): string {
+function replWriter(value: any): string {
   return Logger.stringify(value, LOGGER_OPTIONS);
 }
 

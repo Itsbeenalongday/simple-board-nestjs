@@ -21,6 +21,11 @@ import { DeleteResult, UpdateResult } from 'typeorm';
 export class BoardsController {
   constructor(private boardsService: BoardsService) {}
 
+  @Get()
+  index(): Promise<Board[]> {
+    return this.boardsService.getBoards();
+  }
+
   @Post()
   @UsePipes(ValidationPipe)
   create(@Body() createBoardDto: CreateBoardDto): Promise<Board> {
@@ -49,12 +54,4 @@ export class BoardsController {
 // @Get()
 // index(): Board[] {
 //   return this.boardsService.getAllBoards();
-// }
-
-// @Patch('/:id')
-// update(
-//   @Param('id') id: string,
-//   @Body(BoardStatusValidationPipe) updateBoardDto: UpdateBoardDto,
-// ): Board {
-//   return this.boardsService.updateBoard(id, updateBoardDto);
 // }

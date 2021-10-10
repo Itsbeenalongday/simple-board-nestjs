@@ -4,6 +4,7 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   Param,
   ParseIntPipe,
   Patch,
@@ -24,10 +25,12 @@ import { User } from 'src/auth/user.entity';
 @Controller('boards')
 @UseGuards(AuthGuard()) // 토큰이 있어야만 가능
 export class BoardsController {
+  private logger = new Logger('boards controller');
   constructor(private boardsService: BoardsService) {}
 
   @Get()
   index(@GetUser() user: User): Promise<Board[]> {
+    this.logger.verbose(`${user.name} trying to get boards`);
     return this.boardsService.getBoards(user);
   }
 

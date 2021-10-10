@@ -13,26 +13,27 @@ export class BoardsService {
     @InjectRepository(BoardRepository) private boardRepository: BoardRepository,
   ) {}
 
-  getBoards(): Promise<Board[]> {
-    return this.boardRepository.getBoards();
+  getBoards(user: User): Promise<Board[]> {
+    return this.boardRepository.getBoards(user);
   }
 
   postBoard(createBoardDto: CreateBoardDto, user: User): Promise<Board> {
     return this.boardRepository.postBoard(createBoardDto, user);
   }
 
-  getBoard(id: number): Promise<Board> {
-    return this.boardRepository.getBoard(id);
+  getBoard(id: number, user: User): Promise<Board> {
+    return this.boardRepository.getBoard(id, user);
   }
 
-  deleteBoard(id: number): Promise<DeleteResult> {
-    return this.boardRepository.deleteBoard(id);
+  deleteBoard(id: number, user: User): Promise<DeleteResult> {
+    return this.boardRepository.deleteBoard(id, user);
   }
 
   patchBoard(
     id: number,
     updateBoardDto: UpdateBoardDto,
+    user: User,
   ): Promise<UpdateResult> {
-    return this.boardRepository.patchBoard(id, updateBoardDto);
+    return this.boardRepository.patchBoard(id, updateBoardDto, user);
   }
 }

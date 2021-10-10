@@ -13,8 +13,10 @@ import { UpdateBoardDto } from './dto/update-board.dto';
 
 @EntityRepository(Board) // board를 컨트롤 하겠다.
 export class BoardRepository extends Repository<Board> {
-  async getBoards(): Promise<Board[]> {
-    return this.find();
+  async getBoards(user: User): Promise<Board[]> {
+    const query = this.createQueryBuilder('board'); // board table에 대한 쿼리
+    query.where('board.userId = :userId', { userId: user.id });
+    return await query.getMany();
   }
 
   async postBoard(createBoardDto: CreateBoardDto, user: User): Promise<Board> {
@@ -27,14 +29,14 @@ export class BoardRepository extends Repository<Board> {
     return board;
   }
 
-  async getBoard(id: number): Promise<Board> {
-    const board = await this.findOne(id);
+  async getBoard(id: number, user: User): Promise<Board> {
+    const board = await this.findOne({ id, user });
     if (!board) throw new NotFoundException();
     return board;
   }
 
-  async deleteBoard(id: number): Promise<DeleteResult> {
-    const board = await this.delete(id);
+  async deleteBoard(id: number, user: User): Promise<DeleteResult> {
+    const board = await this.delete({ id, user }); // 두 조건으로 찾는다.
     if (board.affected === 0) throw new NotFoundException();
     return board;
   }
@@ -42,8 +44,9 @@ export class BoardRepository extends Repository<Board> {
   async patchBoard(
     id: number,
     updateBoardDto: UpdateBoardDto,
+    user: User,
   ): Promise<UpdateResult> {
-    const board = this.update(id, updateBoardDto);
+    const board = this.update({ id, user }, updateBoardDto);
     return board;
   }
 }

@@ -50,8 +50,3 @@ export class BoardsController {
     return this.boardsService.patchBoard(id, updateBoardDto);
   }
 }
-
-// @Get()
-// index(): Board[] {
-//   return this.boardsService.getAllBoards();
-// }

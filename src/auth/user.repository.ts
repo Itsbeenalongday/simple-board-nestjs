@@ -35,10 +35,12 @@ export class UserRepository extends Repository<User> {
   }
 
   async signIn(authCredentialDto: AuthCredentialDto): Promise<string> {
-    const { name, password } = authCredentialDto;
-    const user = await this.findOne({ name });
-    if (user && (await bcrypt.compare(password, user.password))) {
-      return '로그인에 성공하였습니다.';
+    const user = await this.findOne({ name: authCredentialDto.name });
+    if (
+      user &&
+      (await bcrypt.compare(authCredentialDto.password, user.password))
+    ) {
+      return '200';
     } else {
       throw new UnauthorizedException(
         '로그인에 실패하였습니다. 이름이나 비밀번호를 확인해주세요',

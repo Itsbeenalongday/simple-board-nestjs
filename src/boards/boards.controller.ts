@@ -18,6 +18,8 @@ import { UpdateBoardDto } from './dto/update-board.dto';
 import { Board } from './board.entity';
 import { DeleteResult, UpdateResult } from 'typeorm';
 import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from 'src/auth/decorator/get-user.decorator';
+import { User } from 'src/auth/user.entity';
 
 @Controller('boards')
 @UseGuards(AuthGuard()) // 토큰이 있어야만 가능
@@ -31,8 +33,11 @@ export class BoardsController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  create(@Body() createBoardDto: CreateBoardDto): Promise<Board> {
-    return this.boardsService.postBoard(createBoardDto);
+  create(
+    @Body() createBoardDto: CreateBoardDto,
+    @GetUser() user: User,
+  ): Promise<Board> {
+    return this.boardsService.postBoard(createBoardDto, user);
   }
 
   @Get('/:id')

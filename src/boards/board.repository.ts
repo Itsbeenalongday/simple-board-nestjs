@@ -1,4 +1,5 @@
 import { NotFoundException } from '@nestjs/common';
+import { User } from 'src/auth/user.entity';
 import {
   DeleteResult,
   EntityRepository,
@@ -16,9 +17,10 @@ export class BoardRepository extends Repository<Board> {
     return this.find();
   }
 
-  async postBoard(createBoardDto: CreateBoardDto): Promise<Board> {
+  async postBoard(createBoardDto: CreateBoardDto, user: User): Promise<Board> {
     const board = this.create({
       status: BoardStatus.PUBLIC,
+      user: user,
       ...createBoardDto,
     });
     await this.save(board);

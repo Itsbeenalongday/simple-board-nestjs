@@ -35,22 +35,3 @@ export class BoardsService {
     return this.boardRepository.patchBoard(id, updateBoardDto);
   }
 }
-
-// getAllBoards(): Board[] {
-//   return this.boards;
-// }
-
-// destroyBoard(id: string): void {
-//   const object = this.getBoard(id);
-//   this.boards = this.boards.filter((board) => board.id != object.id);
-// }
-
-// updateBoard(id: string, updateBoardDto: UpdateBoardDto): Board {
-//   const board = {
-//     ...this.getBoard(id),
-//     ...updateBoardDto,
-//   };
-//   this.destroyBoard(id);
-//   this.boards.push(board);
-//   return board;
-// }

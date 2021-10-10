@@ -19,7 +19,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "console": "ts-node -r tsconfig-paths/register src/console.ts"
+    "console": "ts-node -r tsconfig-paths/register src/console.ts",
+    "var:kill": "dotenv cross-var echo %USER_NAME%"
   },
   "dependencies": {
     "@nestjs/common": "^7.6.15",
@@ -33,6 +34,8 @@
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
+    "cross-var": "^1.1.0",
+    "dotenv-cli": "^4.0.0",
     "passport": "^0.5.0",
     "passport-jwt": "^4.0.0",
     "pg": "^8.7.1",
